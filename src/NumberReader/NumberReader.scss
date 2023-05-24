@@ -1,0 +1,95 @@
+.number-reader {
+  display: flex;
+  padding: 20px;
+  background-color: rgba(50, 50, 50, 0.4);
+
+  .side {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+
+  .restart-button {
+    margin-bottom: 20px;
+  }
+
+  .restart-button,
+  form.form > button {
+    height: 36px;
+    border-radius: 6px;
+    margin-right: 10px;
+  }
+
+  .rs-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    button.rs-play {
+      padding: 4px;
+      font-size: 1em;
+      cursor: pointer;
+      pointer-events: none;
+      outline: none;
+      border: solid 1px rgba(255, 255, 255, 1);
+      border-radius: 6px;
+    }
+
+    .rs-play,
+    .rs-stop,
+    .rs-pause,
+    .rs-resume {
+      width: 60px;
+    }
+    
+    .rs-play{
+      &::after {
+        content: "start";
+      }
+    }
+    .rs-stop {
+      &::after {
+        content: "stop";
+      }
+    }
+    .rs-pause {
+      &::after {
+        content: "pause";
+      }
+    }
+    .rs-resume {
+      &::after {
+        content: "resume";
+      }
+    }
+  }
+
+  form.form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+
+    > input {
+      height: 30px;
+      border-radius: 6px;
+      margin: 0 10px;
+    }
+    > div.is-correct {
+      display: flex;
+      align-items: center;
+      height: 36px;
+      border-radius: 6px;
+      background-color: bisque;
+      padding: 0 10px;
+
+      &.true {
+        background-color: rgba(0, 255, 0, 0.5);
+      }
+      &.false {
+        background-color: rgba(255, 0, 0, 0.5);
+      }
+    }
+  }
+}
