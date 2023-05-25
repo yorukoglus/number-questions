@@ -7,6 +7,10 @@
     display: flex;
     flex: 1;
     flex-direction: column;
+
+    .speech-text {
+      margin-top: 10px;
+    }
   }
 
   .restart-button {
@@ -42,8 +46,8 @@
     .rs-resume {
       width: 60px;
     }
-    
-    .rs-play{
+
+    .rs-play {
       &::after {
         content: "start";
       }

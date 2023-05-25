@@ -8,8 +8,9 @@ const NumberReader = () => {
   const [result, setResult] = useState<number>(0);
   const [answer, setAnswer] = useState<number | string>();
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
-  const [textAsButton, setTextAsButton] = useState<boolean>(false);
-  
+
+  const [showResult, setShowResult] = useState<boolean>(false);
+  const [showText, setShowText] = useState<boolean>(false);
 
   const textCreator = () => {
     let n = Math.floor(Math.random() * 2) + 1;
@@ -35,7 +36,6 @@ const NumberReader = () => {
 
   const handleChange = (e: any) => {
     setAnswer(Number(e.target.value));
-    console.log({ value: Number(e.target.value), result });
 
     setIsCorrect(Number(e.target.value) === result);
   };
@@ -48,8 +48,7 @@ const NumberReader = () => {
   useEffect(() => {
     setAnswer("");
     setIsCorrect(false);
-    console.log({ text });
-  }, [text]);//eslint-disable-line
+  }, [text]); //eslint-disable-line
 
   useEffect(() => {
     textCreator();
@@ -58,37 +57,54 @@ const NumberReader = () => {
   return (
     <div className="number-reader">
       <div className="side left-side">
-        
+        <div>
+          <label>Show Text:</label>
+          <input
+            type="checkbox"
+            checked={showText}
+            onChange={() => setShowText((showText) => !showText)}
+          />
+        </div>
+        <div>
+          <label>Show Result:</label>
+          <input
+            type="checkbox"
+            checked={showResult}
+            onChange={() => setShowResult((showResult) => !showResult)}
+          />
+        </div>
       </div>
       <div className="side right-side">
-      <button className="restart-button" onClick={textCreator}>
-        Restart
-      </button>
-      <Speech
-        voice="Google UK English Female"
-        displayText={text}
-        text={text}
-        textAsButton={textAsButton}
-        stop
-        pause
-        resume>
-        konus
-      </Speech>
-      <form onSubmit={handleSubmit} className="form">
-        <label>Answer:</label>
-        <input
-          type="number"
-          placeholder="please enter"
-          title="number"
-          value={answer}
-          onChange={handleChange}
-        />
-        {answer ? (
-          <div className={`is-correct ${isCorrect ? "true" : "false"}`}>
-            {isCorrect ? "True" : "False"}
-          </div>
-        ) : null}
-      </form></div>
+        <button className="restart-button" onClick={textCreator}>
+          Restart
+        </button>
+        <Speech
+          voice="Google UK English Female"
+          displayText={text}
+          text={text}
+          stop
+          pause
+          resume>
+          konus
+        </Speech>
+        <div className="speech-text">{showText ? text : null}</div>
+        <form onSubmit={handleSubmit} className="form">
+          <label>Answer:</label>
+          <input
+            type="number"
+            placeholder="please enter"
+            title="number"
+            value={answer}
+            onChange={handleChange}
+          />
+          {answer ? (
+            <div className={`is-correct ${isCorrect ? "true" : "false"}`}>
+              {isCorrect ? "True" : "False"}
+            </div>
+          ) : null}
+          {showResult ? result : null}
+        </form>
+      </div>
     </div>
   );
 };
