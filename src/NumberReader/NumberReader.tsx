@@ -68,7 +68,7 @@ const NumberReader = () => {
   }
 
   const textCreator = () => {
-    let n = game === -1 ? Math.floor(Math.random() * 3) + 1 : game;
+    let n = game === -1 ? Math.floor(Math.random() * 4) + 1 : game;
 
     let t = "";
     if (n === 1) {
