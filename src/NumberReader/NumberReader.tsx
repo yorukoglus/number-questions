@@ -19,6 +19,8 @@ const NumberReader = () => {
   const [difficulty, setDifficulty] = useState<number>(0);
   const [game, setGame] = useState<number>(-1);
   const [order, setOrder] = useState<number>(1);
+  const [delay, setDelay] = useState<number>(1000);
+  const [rate, setRate] = useState<number>(1);
 
   function speakMessage(message: string, PAUSE_MS = 500, splitter?: string) {
     try {
@@ -32,7 +34,7 @@ const NumberReader = () => {
           voices.find(({ name }) => name === "Google UK English Female") ||
           voices[0];
         msg.volume = 1; // 0 to 1
-        msg.rate = 1; // 0.1 to 10
+        msg.rate = 1 + (rate - 1) * 0.1; // 0.1 to 10
         msg.pitch = 1; // 0 to 2
         msg.text = textToSpeak;
         msg.lang = "en-US";
@@ -148,6 +150,31 @@ const NumberReader = () => {
     textCreator();
   }, [difficulty, game, order]); //eslint-disable-line
 
+  useEffect(() => {
+    switch (difficulty) {
+      case 0:
+        setDelay(1000);
+        break;
+      case 1:
+        setDelay(500);
+        break;
+      case 2:
+        setDelay(0);
+        break;
+    }
+    switch (difficulty) {
+      case 0:
+        setRate(1);
+        break;
+      case 1:
+        setRate(2);
+        break;
+      case 2:
+        setRate(3);
+        break;
+    }
+  }, [difficulty]); //eslint-disable-line
+
   return (
     <div className="number-reader">
       <div className="side left-side">
@@ -204,6 +231,29 @@ const NumberReader = () => {
             </span>
           )}
         </div>
+
+        {[3, 4].includes(game) && (
+          <div className="config-element">
+            <span style={{ marginLeft: "10px" }}>
+              <label>Delay:</label>
+              <input
+                name="order"
+                type="number"
+                value={delay}
+                onChange={(e: any) => setDelay(Number(e.target.value))}
+              />
+            </span>
+            <span style={{ marginLeft: "10px" }}>
+              <label>Rate:</label>
+              <input
+                name="rate"
+                type="number"
+                value={rate}
+                onChange={(e: any) => setRate(Number(e.target.value))}
+              />
+            </span>
+          </div>
+        )}
       </div>
       <div className="side right-side">
         <button className="restart-button" onClick={textCreator}>
@@ -212,7 +262,7 @@ const NumberReader = () => {
         {[3, 4].includes(game) ? (
           <button
             style={{ height: "40px" }}
-            onClick={() => speakMessage(text, 1000, "  ")}>
+            onClick={() => speakMessage(text, delay, "  ")}>
             Start
           </button>
         ) : (
