@@ -52,20 +52,9 @@ const NumberReader = () => {
       console.error(e);
     }
   }
-  function findSecondLargestElem(arr: number[]) {
-    let first = -1,
-      second = -1;
 
-    for (let i = 0; i <= arr.length - 1; i++) {
-      if (arr[i] > first) {
-        second = first;
-        first = arr[i];
-      } else if (arr[i] > second && arr[i] !== first) {
-        second = arr[i];
-      }
-    }
-    return second;
-  }
+  const findSecondElem = (arr: number[], order: 1 | 2) =>
+    arr.sort((a, b) => (order === 1 ? b - a : a - b))?.[1];
 
   const textCreator = () => {
     let n = game === -1 ? Math.floor(Math.random() * 4) + 1 : game;
@@ -120,9 +109,15 @@ const NumberReader = () => {
           numbers.push(randomGenerator(10, 100, 1));
         }
       }
-      setResult(
-        order === 1 ? Math.max(...numbers) : findSecondLargestElem(numbers)
-      );
+      if (n === 3) {
+        setResult(
+          order === 1 ? Math.max(...numbers) : findSecondElem(numbers, 1)
+        );
+      } else {
+        setResult(
+          order === 1 ? Math.min(...numbers) : findSecondElem(numbers, 2)
+        );
+      }
       const predicator = n === 3 ? "largest" : "smallest";
       t =
         "Which one is the " +
